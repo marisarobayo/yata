@@ -5,7 +5,7 @@
       <span :class="$style.logo">YATA</span>
     </div>
     <div :class="$style.logindiv">
-      <ButtonPrimary>Iniciar sesión</ButtonPrimary>
+      <ButtonPrimary @click="$router.push('/dashboard')">Iniciar sesión</ButtonPrimary>
     </div>
   </nav>
   <div :class="$style.pitch">
@@ -32,7 +32,7 @@ export default defineComponent({
   name: 'Home',
   components: {
     ButtonPrimary
-},
+  },
 });
 </script>
 
