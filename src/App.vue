@@ -1,6 +1,6 @@
 <template>
   <TopBar :user="user"/>
-  <router-view/>
+  <router-view :user="user"/>
 </template>
 
 <script lang="ts">

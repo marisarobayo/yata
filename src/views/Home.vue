@@ -17,10 +17,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { User } from '@/utils/models';
+import { defineComponent, PropType } from 'vue'
+import router from '@/router';
 
 export default defineComponent({
   name: 'Home',
+  props: {
+    user: Object as PropType<User>
+  },
+  setup: (props) => {
+    if(props.user) {
+      router.push('/dashboard')
+    }
+  }
 });
 </script>
 
