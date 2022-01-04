@@ -5,21 +5,40 @@
       <div :class="$style.logodiv">
         <span :class="$style.logo">YATA</span>
       </div>
-      <div :class="$style.logindiv">
+      <div :class="$style.logindiv" v-if="!user">
         <ButtonPrimary @click="$router.push('/dashboard')">Iniciar sesión</ButtonPrimary>
+      </div>
+      <div v-if="user" :class="$style.userarea">
+        <div :class="$style.coins">
+          <font-awesome-icon icon="coins" :class="$style.coinicon" />
+          {{user.coins}}
+        </div>
+        <div :class="$style.streak">
+          <font-awesome-icon icon="bullseye" :class="$style.streakicon" />
+          {{user.streakDays}} días
+        </div>
+        <div>
+          <ButtonPrimary>
+            <font-awesome-icon icon="plus" />
+          </ButtonPrimary>
+        </div>
       </div>
     </div>
   </nav>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { User } from "@/utils/models";
+import { defineComponent, PropType } from "vue";
 import ButtonPrimary from "./ButtonPrimary.vue";
 
 export default defineComponent({
   name: 'TopBar',
   components: {
     ButtonPrimary,
+  },
+  props: {
+    user: Object as PropType<User>
   }
 })
 </script>
@@ -52,5 +71,28 @@ export default defineComponent({
     color: white;
     letter-spacing: 0.05em;
     font-weight: 600;
+  }
+  .userarea {
+    display: flex;
+    align-items: center;
+    gap: 0 2em;
+  }
+  .streak {
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0 0.5em;
+  }
+  .streakicon {
+    font-size: x-large;
+  }
+  .coins {
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0 0.5em;
+  }
+  .coinicon {
+    font-size: x-large;
   }
 </style>
