@@ -1,13 +1,5 @@
 
 <template>
-  <nav :class="$style.bar">
-    <div :class="$style.logodiv">
-      <span :class="$style.logo">YATA</span>
-    </div>
-    <div :class="$style.logindiv">
-      <ButtonPrimary @click="$router.push('/dashboard')">Iniciar sesión</ButtonPrimary>
-    </div>
-  </nav>
   <div :class="$style.pitch">
     <div>
       <p :class="$style.explanationTitle">
@@ -26,35 +18,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import ButtonPrimary from '@/components/ButtonPrimary.vue';
 
 export default defineComponent({
   name: 'Home',
-  components: {
-    ButtonPrimary
-  },
 });
 </script>
 
 <style module>
-  .bar {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .logodiv {
-    padding: 0.5rem;
-  }
-  .logindiv {
-    padding: 0.5rem;
-  }
-  .logo {
-    font-size: x-large;
-    font-weight: 600;
-  }
   .pitch {
     max-width: 1400px;
     margin-left: auto;
