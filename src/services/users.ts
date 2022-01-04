@@ -1,4 +1,6 @@
 
+import { User, DaysOfWeek } from '@/utils/models'
+
 export function getCurrentUser(): User {
   const testUser: User = {
     name: 'Marisa',

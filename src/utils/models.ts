@@ -1,5 +1,5 @@
 
-enum DaysOfWeek {
+export enum DaysOfWeek {
   MONDAY = 'MONDAY',
   TUESDAY = 'TUESDAY',
   WEDNESDAY = 'WEDNESDAY',
@@ -27,7 +27,7 @@ interface Reward {
   cost: number,
 }
 
-interface User {
+export interface User {
   name: string,
   coins: number,
   streakDays: number,
