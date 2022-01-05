@@ -2,7 +2,7 @@
 <template>
   <div :class="$style.task">
     <div>
-      o
+      <Checkbox :checked="false"/>
     </div>
     <div>
       {{task?.title}}
@@ -23,13 +23,14 @@ import { Task } from "@/utils/models";
 import { defineComponent, PropType } from "vue";
 import { datetime } from "@/utils/formatting";
 import Badge from "./Badge.vue";
+import Checkbox from "./Checkbox.vue";
 
 export default defineComponent({
     name: "ListedTask",
     props: {
       task: Object as PropType<Task>
     },
-    components: { Badge },
+    components: { Badge, Checkbox },
     setup: () => {
       return {
         datetime,
