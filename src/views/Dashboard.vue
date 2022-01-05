@@ -9,6 +9,9 @@
     </div>
     <div>
       <h1 :class="$style.listtitle">Resto de semana</h1>
+      <div :class="$style.list">
+        <ListedTask v-for="task in restOfWeekTasks" :key="task.id" :task="task"/>
+      </div>
     </div>
     <div>
       <h1 :class="$style.listtitle">Recompensas</h1>
@@ -20,7 +23,7 @@
 import { computed, defineComponent, PropType } from 'vue'
 import ListedTask from '@/components/ListedTask.vue';
 import { User } from '@/utils/models';
-import { getDay, isSameDay } from 'date-fns';
+import { getDay, getWeek, isSameDay, isSameWeek } from 'date-fns';
 
 export default defineComponent({
     name: "Dashboard",
@@ -45,8 +48,27 @@ export default defineComponent({
         })
       })
 
+      const restOfWeekTasks = computed(() => {
+        if (!props.user?.tasks) {
+          return []
+        }
+
+        let candidates = props.user.tasks.filter(task => todayTasks.value.indexOf(task) === -1)
+        return candidates.filter(task => {
+          const today = new Date()
+          if(task.frequency instanceof Date) {
+            return isSameWeek(today, task.frequency)
+          } else {
+            return task.frequency.daysOfWeek.some(dayOfWeek => {
+              return getWeek(today) === dayOfWeek
+            })
+          }
+        })
+      })
+
       return {
         todayTasks,
+        restOfWeekTasks,
       }
     }
 });
