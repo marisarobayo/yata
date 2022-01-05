@@ -23,7 +23,7 @@ export function getCurrentUser(): User {
         description: 'Tan solo ir de compras',
         difficulty: 1,
         frequency: {
-          time: new Date('2022-12-17T15:00:00'),
+          time: new Date('2022-05-01T15:00:00'),
           daysOfWeek: [DaysOfWeek.TUESDAY],
         }
       },
@@ -39,10 +39,13 @@ export function getCurrentUser(): User {
       },
       {
         id: '3',
-        title: 'Codificar',
-        description: '',
+        title: 'Dibujar',
+        description: 'Estoy dibujando!',
         difficulty: 3,
-        frequency: '3',
+        frequency: {
+          time: new Date('2022-12-17T15:00:00'),
+          daysOfWeek: [DaysOfWeek.MONDAY, DaysOfWeek.TUESDAY, DaysOfWeek.WEDNESDAY, DaysOfWeek.THURSDAY, DaysOfWeek.FRIDAY, DaysOfWeek.SATURDAY, DaysOfWeek.SUNDAY],
+        },
       },
       {
         id: '4',

@@ -1,12 +1,12 @@
 
 export enum DaysOfWeek {
-  MONDAY = 'MONDAY',
-  TUESDAY = 'TUESDAY',
-  WEDNESDAY = 'WEDNESDAY',
-  THURSDAY = 'THURSDAY',
-  FRIDAY = 'FRIDAY',
-  SATURDAY = 'SATURDAY',
-  SUNDAY = 'SUNDAY',
+  MONDAY = 1,
+  TUESDAY = 2,
+  WEDNESDAY = 3,
+  THURSDAY = 4,
+  FRIDAY = 5,
+  SATURDAY = 6,
+  SUNDAY = 0,
 }
 
 interface TaskFrequencyWeekly {
@@ -19,7 +19,7 @@ export interface Task {
   title: string,
   description: string,
   difficulty: 1 | 2 | 3 | 4,
-  frequency: Date | string | TaskFrequencyWeekly
+  frequency: Date | TaskFrequencyWeekly
 }
 
 interface Reward {

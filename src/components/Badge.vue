@@ -17,7 +17,7 @@ export default defineComponent({
   .badge {
     display: inline-flex;
     align-items: center;
-    padding: 0.25em 1.5em;
+    padding: 0.25em 1.25em;
     border-radius: 9999px;
     font-size: x-small;
     font-weight: 600;

@@ -1,23 +1,26 @@
 
 <template>
   <div :class="$style.tasks">
-    <div :class="$style.list">
+    <div>
       <h1 :class="$style.listtitle">Para hoy</h1>
-      <ListedTask :task="user?.tasks[0]"/>
+      <div :class="$style.list">
+        <ListedTask v-for="task in todayTasks" :key="task.id" :task="task"/>
+      </div>
     </div>
-    <div :class="$style.list">
+    <div>
       <h1 :class="$style.listtitle">Resto de semana</h1>
     </div>
-    <div :class="$style.list">
+    <div>
       <h1 :class="$style.listtitle">Recompensas</h1>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
 import ListedTask from '@/components/ListedTask.vue';
 import { User } from '@/utils/models';
+import { getDay, isSameDay } from 'date-fns';
 
 export default defineComponent({
     name: "Dashboard",
@@ -25,6 +28,27 @@ export default defineComponent({
     props: {
       user: Object as PropType<User>
     },
+    setup: (props) => {
+      const todayTasks = computed(() => {
+        if (!props.user?.tasks) {
+          return []
+        }
+        return props.user?.tasks.filter(task => {
+          const today = new Date()
+          if(task.frequency instanceof Date) {
+            return isSameDay(today, task.frequency)
+          } else {
+            return task.frequency.daysOfWeek.some(dayOfWeek => {
+              return getDay(today) === dayOfWeek
+            })
+          }
+        })
+      })
+
+      return {
+        todayTasks,
+      }
+    }
 });
 </script>
 
@@ -38,7 +62,9 @@ export default defineComponent({
     gap: 0 2em;
   }
   .list {
-    
+    display: flex;
+    flex-direction: column;
+    gap: 1em 0;
   }
 
   .listtitle {
