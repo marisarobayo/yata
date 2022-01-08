@@ -49,7 +49,7 @@ export default defineComponent({
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #113c12;
+    background-color: #4461ee;
   }
   .barcontent {
     justify-content: space-between;

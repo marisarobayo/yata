@@ -13,7 +13,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'ButtonPrimary',
+  name: 'ButtonSecondary',
 })
 </script>
 
@@ -21,18 +21,18 @@ export default defineComponent({
   .button {
     display: inline-flex;
     align-items: center;
-    padding: 0.625rem 1rem;
+    padding: 0.5rem 1rem;
     font-size: small;
     font-weight: 600;
-    border-radius: 9999px;
+    border-radius: 10px;
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     cursor: pointer;
-    background-color: #1c631d;
-    color: white;
-    border: transparent;
+    background-color: white;
+    color: rgb(55 65 81);
+    border: 1px rgb(209 213 219) solid;
 
     &:hover {
-      background-color: #113c12;
+      background-color: rgb(249 250 251);
     }
   }
 </style>

@@ -8,10 +8,12 @@ export function getCurrentUser(): User {
     streakDays: 20,
     rewards: [
       {
+        id: '1',
         name: 'Chocolate caliente',
         cost: 10,
       },
       {
+        id: '2',
         name: 'Comprar dulces',
         cost: 15,
       }

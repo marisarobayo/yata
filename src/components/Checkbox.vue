@@ -27,7 +27,7 @@ export default defineComponent({
   .checkbox {
     height: 0.5em;
     width: 0.5em;
-    border-radius: 0.25rem;
+    border-radius: 20em;
     color: rgb(79 70 229);
     border-color: rgb(209 213 219);
     &:focus {

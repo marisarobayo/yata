@@ -15,6 +15,9 @@
     </div>
     <div>
       <h1 :class="$style.listtitle">Recompensas</h1>
+      <div :class="$style.list">
+        <ListedReward v-for="reward in user?.rewards" :key="reward.id" :reward="reward"/>
+      </div>
     </div>
   </div>
 </template>
@@ -24,10 +27,11 @@ import { computed, defineComponent, PropType } from 'vue'
 import ListedTask from '@/components/ListedTask.vue';
 import { User } from '@/utils/models';
 import { getDay, getWeek, isSameDay, isSameWeek } from 'date-fns';
+import ListedReward from '@/components/ListedReward.vue';
 
 export default defineComponent({
     name: "Dashboard",
-    components: { ListedTask },
+    components: { ListedTask, ListedReward },
     props: {
       user: Object as PropType<User>
     },
