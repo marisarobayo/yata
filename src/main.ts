@@ -6,6 +6,7 @@ import store from './store'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPlus, faBullseye, faCoins } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import "@/assets/styles/main.css";
 
 library.add(faPlus)
 library.add(faBullseye)

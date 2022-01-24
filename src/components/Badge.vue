@@ -1,6 +1,6 @@
 
 <template>
-  <span :class="$style.badge">
+  <span class="inline-flex justify-center items-center px-1.5 py-1 rounded-full text-xs font-medium text-neutral-200 bg-red-900">
     <slot></slot>
   </span>
 </template>
@@ -12,16 +12,3 @@ export default defineComponent({
   name: 'Badge',
 })
 </script>
-
-<style module lang="scss">
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.25em 1.25em;
-    border-radius: 9999px;
-    font-size: x-small;
-    font-weight: 600;
-    color: #fefce2;
-    background-color: #991b1b;
-  }
-</style>
