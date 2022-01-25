@@ -1,7 +1,11 @@
 
 <template>
-  <span :class="$style.checkbox">
-    <input id="candidates" v-model="isChecked" name="candidates" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" />
+  <span class="h-2 w-2 rounded-2xl text-blue-500 border-gray-900 focus:ring-blue-400">
+    <input
+      v-model="isChecked"
+      type="checkbox"
+      class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+    />
   </span>
 </template>
 
@@ -22,16 +26,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style module lang="scss">
-  .checkbox {
-    height: 0.5em;
-    width: 0.5em;
-    border-radius: 20em;
-    color: rgb(79 70 229);
-    border-color: rgb(209 213 219);
-    &:focus {
-      --tw-ring-color: rgb(99 102 241);
-    }
-  }
-</style>

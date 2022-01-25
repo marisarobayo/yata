@@ -2,7 +2,7 @@
 <template>
   <button
     type="button"
-    :class="$style.button"
+    class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-full shadow-sm cursor-pointer bg-green-700 text-neutral-900 border-transparent hover:bg-green-900"
     @click="$emit('click')"
   >
     <slot></slot>
@@ -16,23 +16,3 @@ export default defineComponent({
   name: 'ButtonPrimary',
 })
 </script>
-
-<style module lang="scss">
-  .button {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.625rem 1rem;
-    font-size: small;
-    font-weight: 600;
-    border-radius: 9999px;
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    cursor: pointer;
-    background-color: #1c631d;
-    color: white;
-    border: transparent;
-
-    &:hover {
-      background-color: #113c12;
-    }
-  }
-</style>

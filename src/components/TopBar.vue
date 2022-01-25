@@ -1,20 +1,20 @@
 
 <template>
-  <nav :class="$style.bar">
-    <div :class="$style.barcontent">
-      <div :class="$style.logodiv">
-        <span :class="$style.logo">YATA</span>
+  <nav class="fixed top-0 left-0 w-full bg-blue-700">
+    <div class="flex justify-between w-full max-w-7xl py-1 mx-auto">
+      <div class="p-2">
+        <span class="text-2xl text-white tracking-wider font-medium">YATA</span>
       </div>
-      <div :class="$style.logindiv" v-if="!user">
+      <div class="p-2" v-if="!user">
         <ButtonPrimary @click="$router.push('/dashboard')">Iniciar sesión</ButtonPrimary>
       </div>
-      <div v-if="user" :class="$style.userarea">
-        <div :class="$style.coins">
-          <font-awesome-icon icon="coins" :class="$style.coinicon" />
+      <div v-if="user" class="flex items-center gap-x-4">
+        <div class="flex items-center gap-x-2 text-white">
+          <font-awesome-icon icon="coins" class="text-3xl" />
           {{user.coins}}
         </div>
-        <div :class="$style.streak">
-          <font-awesome-icon icon="bullseye" :class="$style.streakicon" />
+        <div class="text text-white items-center gap-x-2">
+          <font-awesome-icon icon="bullseye" class="text-3xl"/>
           {{user.streakDays}} días
         </div>
         <div>
@@ -42,57 +42,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style module lang="scss">
-  .bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #4461ee;
-  }
-  .barcontent {
-    justify-content: space-between;
-    display: flex;
-    width: 100%;
-    max-width: 1400px;
-    padding: 0.25em 0;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .logodiv {
-    padding: 0.5rem;
-  }
-  .logindiv {
-    padding: 0.5rem;
-  }
-  .logo {
-    font-size: x-large;
-    color: white;
-    letter-spacing: 0.05em;
-    font-weight: 600;
-  }
-  .userarea {
-    display: flex;
-    align-items: center;
-    gap: 0 2em;
-  }
-  .streak {
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 0 0.5em;
-  }
-  .streakicon {
-    font-size: x-large;
-  }
-  .coins {
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 0 0.5em;
-  }
-  .coinicon {
-    font-size: x-large;
-  }
-</style>

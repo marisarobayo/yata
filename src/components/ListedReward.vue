@@ -1,11 +1,11 @@
 
 <template>
-  <div :class="$style.reward">
+  <div class="flex items-center gap-x-3">
     <div>
       {{reward?.name}}
     </div>
     <ButtonSecondary>
-      <span :class="$style.cost">
+      <span class="mr-2">
         {{reward?.cost}}
       </span>
       <font-awesome-icon icon="coins" />
@@ -26,14 +26,3 @@ export default defineComponent({
     components: { ButtonSecondary }
 })
 </script>
-
-<style module lang="scss">
-  .reward {
-    display: flex;
-    align-items: center;
-    gap: 0 0.75em;
-  }
-  .cost {
-    margin-right: 0.5em;
-  }
-</style>

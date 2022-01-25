@@ -1,21 +1,21 @@
 
 <template>
-  <div :class="$style.tasks">
+  <div class="flex max-w-7xl mx-auto justify-around">
     <div>
-      <h1 :class="$style.listtitle">Para hoy</h1>
-      <div :class="$style.list">
+      <h1 class="mb-4 font-bold text-2xl">Para hoy</h1>
+      <div class="flex flex-col gap-y-4">
         <ListedTask v-for="task in todayTasks" :key="task.id" :task="task"/>
       </div>
     </div>
     <div>
-      <h1 :class="$style.listtitle">Resto de semana</h1>
-      <div :class="$style.list">
+      <h1 class="mb-4 font-bold text-2xl">Resto de semana</h1>
+      <div class="flex flex-col gap-y-4">
         <ListedTask v-for="task in restOfWeekTasks" :key="task.id" :task="task"/>
       </div>
     </div>
     <div>
-      <h1 :class="$style.listtitle">Recompensas</h1>
-      <div :class="$style.list">
+      <h1 class="mb-4 font-bold text-2xl">Recompensas</h1>
+      <div class="flex flex-col gap-y-4">
         <ListedReward v-for="reward in user?.rewards" :key="reward.id" :reward="reward"/>
       </div>
     </div>
@@ -77,24 +77,3 @@ export default defineComponent({
     }
 });
 </script>
-
-<style module>
-  .tasks{
-    max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
-    justify-content: space-around;
-    display: flex;
-    gap: 0 2em;
-  }
-  .list {
-    display: flex;
-    flex-direction: column;
-    gap: 1em 0;
-  }
-
-  .listtitle {
-    margin-bottom: 1em;
-  }
-
-</style>

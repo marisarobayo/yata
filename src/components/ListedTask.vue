@@ -1,6 +1,6 @@
 
 <template>
-  <div :class="$style.task">
+  <div class="flex gap-x-3">
     <div>
       <Checkbox :checked="false"/>
     </div>
@@ -38,10 +38,3 @@ export default defineComponent({
     }
 })
 </script>
-
-<style module lang="scss">
-  .task {
-    display: flex;
-    gap: 0 0.625em;
-  }
-</style>

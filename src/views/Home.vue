@@ -1,11 +1,11 @@
 
 <template>
-  <div :class="$style.pitch">
+  <div class="max-w-7xl mx-auto flex justify-around items-center my-16">
     <div>
-      <p :class="$style.explanationTitle">
+      <p class="text-3xl font-medium">
         Recompénsate por tu esfuerzo
       </p>
-      <p :class="$style.explanationDesc">
+      <p class="text-2xl">
         Con YATA, puedes fijar tareas que hacer a diferentes intervalos del día. YATA te recordará.
         Al completarlas, según su dificultad, consiguirás monedas que podrás canjear por recompensas puestas por ti.
       </p>
@@ -33,22 +33,3 @@ export default defineComponent({
   }
 });
 </script>
-
-<style module>
-  .pitch {
-    max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin: 4rem auto 4rem auto;
-  }
-  .explanationTitle {
-    font-size: xx-large;
-    font-weight: 600;
-  }
-  .explanationDesc {
-    font-size: large;
-  }
-</style>
