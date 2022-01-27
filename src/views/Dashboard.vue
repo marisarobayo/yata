@@ -5,6 +5,7 @@
       <h1 class="mb-4 font-bold text-2xl">Para hoy</h1>
       <div class="flex flex-col gap-y-4">
         <ListedTask v-for="task in todayTasks" :key="task.id" :task="task"/>
+        <AddTask name="today" :user="user" @add="() => null" />
       </div>
     </div>
     <div>
@@ -28,10 +29,11 @@ import ListedTask from '@/components/ListedTask.vue';
 import { User } from '@/utils/models';
 import { getDay, getWeek, isSameDay, isSameWeek } from 'date-fns';
 import ListedReward from '@/components/ListedReward.vue';
+import AddTask from '@/components/AddTask.vue';
 
 export default defineComponent({
     name: "Dashboard",
-    components: { ListedTask, ListedReward },
+    components: { ListedTask, ListedReward, AddTask },
     props: {
       user: Object as PropType<User>
     },
