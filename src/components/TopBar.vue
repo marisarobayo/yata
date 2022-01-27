@@ -1,20 +1,20 @@
 
 <template>
-  <nav class="fixed top-0 left-0 w-full bg-blue-700">
-    <div class="flex justify-between w-full max-w-7xl py-1 mx-auto">
+  <nav class="fixed top-0 left-0 w-full bg-zinc-50 shadow-sm">
+    <div class="flex justify-between w-full max-w-7xl py-1 mx-auto text-gravel-700">
       <div class="p-2">
-        <span class="text-2xl text-white tracking-wider font-medium">YATA</span>
+        <span class="text-3xl tracking-wider font-bold">YATA</span>
       </div>
       <div class="p-2" v-if="!user">
         <ButtonPrimary @click="$router.push('/dashboard')">Iniciar sesión</ButtonPrimary>
       </div>
-      <div v-if="user" class="flex items-center gap-x-4">
-        <div class="flex items-center gap-x-2 text-white">
-          <font-awesome-icon icon="coins" class="text-3xl" />
+      <div v-if="user" class="flex items-center gap-x-8">
+        <div class="flex items-center gap-x-2">
+          <font-awesome-icon icon="coins" class="text-2xl" />
           {{user.coins}}
         </div>
-        <div class="text text-white items-center gap-x-2">
-          <font-awesome-icon icon="bullseye" class="text-3xl"/>
+        <div class="text items-center gap-x-2">
+          <font-awesome-icon icon="bullseye" class="text-2xl"/>
           {{user.streakDays}} días
         </div>
         <div>
