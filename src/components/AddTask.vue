@@ -1,30 +1,45 @@
 
 <template>
   <span class="inline-flex justify-center items-center py-1 gap-x-2">
-    <input
-      type="text"
+    <Input
       :name="name"
-      :id="name"
-      class="shadow-sm focus:ring-teal-500 focus:border-teal-500 block w-full sm:text-sm border-gray-300 rounded-md"
       placeholder="Añade una tarea"
+      v-model="taskName"
     />
     <ButtonPrimary>
-      <font-awesome-icon icon="plus" />
+      <font-awesome-icon icon="plus" @click="submitTask" />
     </ButtonPrimary>
   </span>
 </template>
 
 <script lang="ts">
-import { User } from "@/utils/models";
-import { defineComponent, PropType } from "vue";
+import { defineComponent, ref } from "vue";
 import ButtonPrimary from "./ButtonPrimary.vue";
+import Input from "./Input.vue"
 
 export default defineComponent({
     name: "AddTask",
     props: {
       name: String,
-      user: Object as PropType<User>,
     },
-    components: { ButtonPrimary }
+    components: {
+      ButtonPrimary,
+      Input,
+    },
+    setup (_props, context) {
+      const taskName = ref('')
+
+      const submitTask = () => {
+        if (taskName.value) {
+          context.emit('addTask', taskName.value)
+        }
+      }
+
+      return {
+        taskName,
+        submitTask,
+      }
+    },
+    emits: ['addTask'],
 })
 </script>

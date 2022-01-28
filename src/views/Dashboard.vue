@@ -5,13 +5,14 @@
       <h1 class="mb-4 font-bold text-2xl">Para hoy</h1>
       <div class="flex flex-col gap-y-4">
         <ListedTask v-for="task in todayTasks" :key="task.id" :task="task"/>
-        <AddTask name="today" :user="user" @add="() => null" />
+        <AddTask name="today" @addTask="() => null" />
       </div>
     </div>
     <div>
       <h1 class="mb-4 font-bold text-2xl">Resto de semana</h1>
       <div class="flex flex-col gap-y-4">
         <ListedTask v-for="task in restOfWeekTasks" :key="task.id" :task="task"/>
+        <AddTask name="restOfWeek" @addTask="() => null" />
       </div>
     </div>
     <div>
