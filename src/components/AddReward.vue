@@ -3,15 +3,8 @@
   <span class="inline-flex justify-center items-center py-1 gap-x-2">
     <Input
       name="reward"
-      placeholder="Añade una recompensa"
+      placeholder="Recompénsate"
       v-model="rewardName"
-    />
-    <Input
-      name="rewardCost"
-      placeholder="Coste"
-      type="number"
-      v-model="rewardCost"
-      class="w-24"
     />
     <ButtonPrimary>
       <font-awesome-icon icon="plus" @click="submitTask" />

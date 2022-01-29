@@ -1,6 +1,6 @@
 
 <template>
-  <nav class="fixed top-0 left-0 w-full bg-zinc-50 shadow-sm">
+  <nav class="fixed top-0 left-0 w-full bg-white shadow-sm">
     <div class="flex justify-between w-full max-w-7xl py-1 mx-auto text-gravel-700">
       <div class="p-2">
         <span class="text-3xl tracking-wider font-bold">YATA</span>
