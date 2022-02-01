@@ -9,7 +9,7 @@ export enum DaysOfWeek {
   SUNDAY = 0,
 }
 
-interface TaskFrequencyWeekly {
+export interface TaskFrequencyWeekly {
   time: Date,
   daysOfWeek: DaysOfWeek[],
 }
