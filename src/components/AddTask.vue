@@ -1,7 +1,7 @@
 
 <template>
   <span class="inline-flex justify-center items-center py-1 gap-x-2">
-    <Input
+    <InputNoLabel
       :name="name"
       placeholder="Añade una tarea"
       v-model="taskName"
@@ -15,7 +15,7 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import ButtonPrimary from "./ButtonPrimary.vue";
-import Input from "./Input.vue"
+import InputNoLabel from "./InputNoLabel.vue"
 
 export default defineComponent({
     name: "AddTask",
@@ -24,7 +24,7 @@ export default defineComponent({
     },
     components: {
       ButtonPrimary,
-      Input,
+      InputNoLabel,
     },
     setup (_props, context) {
       const taskName = ref('')

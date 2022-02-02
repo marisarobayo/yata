@@ -32,17 +32,17 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onUnmounted, ref } from 'vue'
-import tasksService, { firestoreTaskConverter } from '@/services/tasks'
-import ListedTask from '@/components/ListedTask.vue';
-import { DaysOfWeek, Task, TaskFrequencyWeekly } from '@/utils/models';
-import { getDay, getWeek, isSameDay, isSameWeek } from 'date-fns';
-import ListedReward from '@/components/ListedReward.vue';
-import AddTask from '@/components/AddTask.vue';
-import AddReward from '@/components/AddReward.vue';
-import { onSnapshot } from 'firebase/firestore';
+  import { computed, defineComponent, onUnmounted, ref } from 'vue'
+  import tasksService, { firestoreTaskConverter } from '@/services/tasks'
+  import ListedTask from '@/components/ListedTask.vue';
+  import { DaysOfWeek, Task, TaskFrequencyWeekly } from '@/utils/models';
+  import { getDay, getWeek, isSameDay, isSameWeek } from 'date-fns';
+  import ListedReward from '@/components/ListedReward.vue';
+  import AddTask from '@/components/AddTask.vue';
+  import AddReward from '@/components/AddReward.vue';
+  import { onSnapshot } from 'firebase/firestore';
 
-export default defineComponent({
+  export default defineComponent({
     name: "Dashboard",
     components: { ListedTask, ListedReward, AddTask, AddReward },
     setup: () => {
@@ -99,5 +99,5 @@ export default defineComponent({
         restOfWeekTasks,
       }
     }
-});
+  });
 </script>

@@ -1,7 +1,7 @@
 
 import { Task } from "@/utils/models"
 import { collection } from "firebase/firestore"
-import db from "./firebase"
+import { db } from "./firebase"
 
 const tasksService = collection(db, "tasks")
 

@@ -1,7 +1,7 @@
 
 <template>
   <span class="inline-flex justify-center items-center py-1 gap-x-2">
-    <Input
+    <InputNoLabel
       name="reward"
       placeholder="Recompénsate"
       v-model="rewardName"
@@ -15,13 +15,13 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import ButtonPrimary from "./ButtonPrimary.vue";
-import Input from "./Input.vue"
+import InputNoLabel from "./InputNoLabel.vue"
 
 export default defineComponent({
     name: "AddTask",
     components: {
       ButtonPrimary,
-      Input,
+      InputNoLabel,
     },
     setup (_props, context) {
       const rewardName = ref('')
