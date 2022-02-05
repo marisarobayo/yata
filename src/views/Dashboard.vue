@@ -32,72 +32,80 @@
 </template>
 
 <script lang="ts">
-  import { computed, defineComponent, onUnmounted, ref } from 'vue'
-  import tasksService, { firestoreTaskConverter } from '@/services/tasks'
-  import ListedTask from '@/components/ListedTask.vue';
-  import { DaysOfWeek, Task, TaskFrequencyWeekly } from '@/utils/models';
-  import { getDay, getWeek, isSameDay, isSameWeek } from 'date-fns';
-  import ListedReward from '@/components/ListedReward.vue';
-  import AddTask from '@/components/AddTask.vue';
-  import AddReward from '@/components/AddReward.vue';
-  import { onSnapshot } from 'firebase/firestore';
+import { computed, defineComponent, onUnmounted, ref } from 'vue'
+import tasksService, { firestoreTaskConverter } from '@/services/tasks'
+import ListedTask from '@/components/ListedTask.vue';
+import { DaysOfWeek, Task, TaskFrequencyWeekly } from '@/utils/models';
+import { getDay, getWeek, isSameDay, isSameWeek } from 'date-fns';
+import ListedReward from '@/components/ListedReward.vue';
+import AddTask from '@/components/AddTask.vue';
+import AddReward from '@/components/AddReward.vue';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { useStore } from 'vuex';
+import { key } from '@/store';
+import { db } from '@/services/firebase';
+import { doc } from 'firebase/firestore'
 
-  export default defineComponent({
-    name: "Dashboard",
-    components: { ListedTask, ListedReward, AddTask, AddReward },
-    setup: () => {
-      let tasks = ref<Task[]>([])
+export default defineComponent({
+  name: "Dashboard",
+  components: { ListedTask, ListedReward, AddTask, AddReward },
+  setup: () => {
+    let tasks = ref<Task[]>([])
 
-      const unsub = onSnapshot(tasksService, (snapshot) => {
-        let newTasks : any[] = []
-        snapshot.docs.forEach((task: any) => {
-          newTasks.push(firestoreTaskConverter(task))
-        })
-        tasks.value = newTasks
+    let store = useStore(key)
+    console.log('/users/' + store.state.user.uid)
+    let userRef = doc(db, 'users', store.state.user.uid)
+
+    const unsub = onSnapshot(query(tasksService, where("user", "==", userRef)), (snapshot) => {
+      let newTasks: any[] = []
+      snapshot.docs.forEach((task: any) => {
+        newTasks.push(firestoreTaskConverter(task))
       })
+      tasks.value = newTasks
+    })
 
-      onUnmounted(() => {
-        unsub()
-      })
-      
-      const todayTasks = computed(() => {
-        if (!tasks.value || !tasks.value.length) {
-          return []
-        }
-        return tasks.value.filter(task => {
-          const today = new Date()
-          if(task.frequency instanceof Date) {
-            return isSameDay(today, task.frequency)
-          } else if(task.frequency) {
-            return (task.frequency as TaskFrequencyWeekly).daysOfWeek.some((dayOfWeek: DaysOfWeek) => {
-              return getDay(today) === dayOfWeek 
-            })
-          }
-        })
-      })
-
-      const restOfWeekTasks = computed(() => {
-        if (!tasks.value) {
-          return []
-        }
-
-        let candidates = tasks.value.filter(task => todayTasks.value.indexOf(task) === -1)
-        return candidates.filter(task => {
-          const today = new Date()
-          if(task.frequency instanceof Date) {
-            return isSameWeek(today, task.frequency)
-          } else {
-            return (task.frequency as TaskFrequencyWeekly).daysOfWeek.some((dayOfWeek: DaysOfWeek) => {
-              return getWeek(today) === dayOfWeek
-            })
-          }
-        })
-      })
-
-      return {
-        todayTasks,
-        restOfWeekTasks,
+    onUnmounted(() => {
+      unsub()
+    })
+    
+    const todayTasks = computed(() => {
+      if (!tasks.value || !tasks.value.length) {
+        return []
       }
+      return tasks.value.filter(task => {
+        const today = new Date()
+        if(task.frequency instanceof Date) {
+          return isSameDay(today, task.frequency)
+        } else if(task.frequency) {
+          return (task.frequency as TaskFrequencyWeekly).daysOfWeek.some((dayOfWeek: DaysOfWeek) => {
+            return getDay(today) === dayOfWeek 
+          })
+        }
+      })
+    })
+
+    const restOfWeekTasks = computed(() => {
+      if (!tasks.value) {
+        return []
+      }
+
+      let candidates = tasks.value.filter(task => todayTasks.value.indexOf(task) === -1)
+      return candidates.filter(task => {
+        const today = new Date()
+        if(task.frequency instanceof Date) {
+          return isSameWeek(today, task.frequency)
+        } else {
+          return (task.frequency as TaskFrequencyWeekly).daysOfWeek.some((dayOfWeek: DaysOfWeek) => {
+            return getWeek(today) === dayOfWeek
+          })
+        }
+      })
+    })
+
+    return {
+      todayTasks,
+      restOfWeekTasks,
     }
-  });
+  }
+});
 </script>

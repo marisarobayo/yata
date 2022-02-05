@@ -19,7 +19,8 @@ export interface Task {
   title?: string,
   description?: string,
   difficulty?: 1 | 2 | 3 | 4,
-  frequency: Date | TaskFrequencyWeekly
+  frequency: Date | TaskFrequencyWeekly,
+  user: string,
 }
 
 export interface Reward {
@@ -34,4 +35,5 @@ export interface User {
   streakDays: number,
   tasks: Task[],
   rewards: Reward[],
+  uid: string,
 }

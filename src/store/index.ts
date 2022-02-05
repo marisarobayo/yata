@@ -1,7 +1,16 @@
 import router from '@/router'
 import { auth } from '@/services/firebase'
+import { User } from '@/utils/models'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { createStore } from 'vuex'
+import { InjectionKey } from 'vue'
+import { createStore, Store } from 'vuex'
+
+export interface State {
+  status: {
+    loggedIn: boolean,
+  },
+  user: User,
+}
 
 const userItem = localStorage?.getItem('user')
 const initialState = userItem ? {
@@ -14,7 +23,7 @@ const initialState = userItem ? {
   user: null
 }
 
-console.log(initialState)
+export const key: InjectionKey<Store<State>> = Symbol()
 
 export default createStore({
   state: initialState,

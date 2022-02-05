@@ -1,24 +1,17 @@
 <template>
-  <TopBar :user="user"/>
-  <router-view :user="user"/>
+  <TopBar />
+  <router-view />
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import TopBar from "./components/TopBar.vue";
-import { getCurrentUser } from "./services/users";
 
 export default defineComponent({
   name: 'App',
   components: {
     TopBar
   },
-  setup: () => {
-    let user = getCurrentUser()
-    return {
-      user,
-    }
-  }
 })
 
 </script>

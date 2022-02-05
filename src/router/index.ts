@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../views/Home.vue'
 import Dashboard from '../views/Dashboard.vue'
 import SignUp from '../views/SignUp.vue'
+import store from '@/store'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -32,6 +33,22 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (!store.state.status.loggedIn) {
+    if (to.name !== 'Home') {
+      next('Home')
+    } else {
+      next()
+    }
+  } else {
+    if (to.name === 'Home') {
+      next('Dashboard')
+    } else {
+      next()
+    }
+  }
 })
 
 export default router

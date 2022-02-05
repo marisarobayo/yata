@@ -28,17 +28,22 @@
 </template>
 
 <script lang="ts">
-import { User } from "@/utils/models";
-import { defineComponent, PropType } from "vue";
+import { defineComponent } from "vue";
 import ButtonPrimary from "./ButtonPrimary.vue";
+import { useStore } from "vuex";
+import { key } from "@/store";
 
 export default defineComponent({
   name: 'TopBar',
   components: {
     ButtonPrimary,
   },
-  props: {
-    user: Object as PropType<User>
+  setup: () => {
+    const store = useStore(key)
+
+    return {
+      user: store.state.user,
+    }
   }
 })
 </script>
