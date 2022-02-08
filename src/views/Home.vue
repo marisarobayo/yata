@@ -52,6 +52,7 @@ import { defineComponent, ref } from 'vue'
 import { useStore } from 'vuex';
 
 import Input from '@/components/Input.vue';
+import { key } from '@/store';
 
 export default defineComponent({
   name: 'Home',
@@ -60,7 +61,7 @@ export default defineComponent({
     let email = ref("")
     let password = ref("")
 
-    const store = useStore()
+    const store = useStore(key)
 
     const submit = () => {
       store.dispatch('login', {

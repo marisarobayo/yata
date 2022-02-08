@@ -1,7 +1,7 @@
 import router from '@/router'
 import { auth } from '@/services/firebase'
 import { User } from '@/utils/models'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { InjectionKey } from 'vue'
 import { createStore, Store } from 'vuex'
 
@@ -51,7 +51,12 @@ export default createStore({
         })
     },
     logout({ commit }) {
-      //logout here
+      signOut(auth)
+        .then(() => {
+          commit('logout')
+          localStorage.removeItem('user')
+          router.push('/')
+        })
     },
   },
   modules: {

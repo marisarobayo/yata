@@ -2,8 +2,7 @@
 <template>
   <button
     type="button"
-    class="inline-flex items-center py-1 px-3 text-sm font-medium rounded-lg shadow-sm cursor-pointer bg-neutral-50 text-gray-500 hover:bg-neutral-200 border border-neutral-300"
-    @click="$emit('click')"
+    class="inline-flex items-center py-3 px-3 text-sm font-medium rounded-full shadow-sm cursor-pointer bg-zinc-100 text-zinc-500 hover:bg-zinc-300 border border-zinc-300"
   >
     <slot></slot>
   </button>

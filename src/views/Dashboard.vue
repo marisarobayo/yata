@@ -40,7 +40,7 @@ import { getDay, getWeek, isSameDay, isSameWeek } from 'date-fns';
 import ListedReward from '@/components/ListedReward.vue';
 import AddTask from '@/components/AddTask.vue';
 import AddReward from '@/components/AddReward.vue';
-import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { onSnapshot, query, where } from 'firebase/firestore';
 import { useStore } from 'vuex';
 import { key } from '@/store';
 import { db } from '@/services/firebase';

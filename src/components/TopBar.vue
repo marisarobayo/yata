@@ -22,27 +22,54 @@
             <font-awesome-icon icon="plus" />
           </ButtonPrimary>
         </div>
+        <div class="relative px-2" v-click-outside="() => userMenuOpen = false">
+          <ButtonSecondary @click="openMenu">
+            <font-awesome-icon icon="user" />
+          </ButtonSecondary>
+          <div class="absolute top-10 right-4 w-32 bg-zinc-50 shadow-xl py-3 rounded-xl border border-zinc-200" v-if="userMenuOpen">
+            <div class="w-full">
+              <button class="hover:bg-zinc-200 w-full py-1 rounded-sm" @click="logout">
+                Log out
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import ButtonPrimary from "./ButtonPrimary.vue";
 import { useStore } from "vuex";
 import { key } from "@/store";
+import ButtonSecondary from "./ButtonSecondary.vue";
 
 export default defineComponent({
   name: 'TopBar',
   components: {
     ButtonPrimary,
-  },
+    ButtonSecondary
+},
   setup: () => {
     const store = useStore(key)
 
+    const userMenuOpen = ref(false)
+    
+    let openMenu = () => {
+      userMenuOpen.value = !userMenuOpen.value
+    }
+
+    let logout = () => {
+      store.dispatch('logout')
+    }
+
     return {
       user: store.state.user,
+      userMenuOpen,
+      openMenu,
+      logout,
     }
   }
 })
