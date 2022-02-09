@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import ButtonPrimary from "./ButtonPrimary.vue";
 import { useStore } from "vuex";
 import { key } from "@/store";
@@ -65,8 +65,10 @@ export default defineComponent({
       store.dispatch('logout')
     }
 
+    let user = computed(() => store.state.user)
+
     return {
-      user: store.state.user,
+      user,
       userMenuOpen,
       openMenu,
       logout,
