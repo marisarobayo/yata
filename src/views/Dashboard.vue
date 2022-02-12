@@ -16,7 +16,6 @@
         <div class="flex flex-col gap-y-4">
           <ListedTask v-for="task in restOfWeekTasks" :key="task.id" :task="task"/>
         </div>
-        <AddTask name="restOfWeek" @addTask="() => null"/>
       </div>
     </div>
     <div class="bg-white px-6 pt-6 pb-4 rounded-xl shadow-lg xl:min-h-[600px] lg:min-h-[400px] sm:min-h-[300px] flex flex-col">
