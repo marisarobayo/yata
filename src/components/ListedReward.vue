@@ -19,7 +19,7 @@ import { defineComponent, PropType } from "vue";
 import ButtonSecondary from "./ButtonSecondary.vue";
 
 export default defineComponent({
-    name: "ListedTask",
+    name: "ListedReward",
     props: {
         reward: Object as PropType<Reward>
     },

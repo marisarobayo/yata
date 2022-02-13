@@ -1,16 +1,11 @@
 
 import { DaysOfWeek, Task } from "@/utils/models"
 import { collection } from "firebase/firestore"
-import { db } from "./firebase"
+import { db, FirestoreTimestamp } from "./firebase"
 
 const tasksService = collection(db, "tasks")
 
 export default tasksService
-
-export interface FirestoreTimestamp {
-  seconds: number,
-  toDate: () => Date,
-}
 
 export interface TaskFrequencyWeekly {
   time: FirestoreTimestamp,

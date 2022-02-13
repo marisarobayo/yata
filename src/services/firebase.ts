@@ -17,6 +17,11 @@ const firebaseConfig = {
   appId: "1:339480037761:web:6c974c909e4cae154c4080"
 };
 
+export interface FirestoreTimestamp {
+  seconds: number,
+  toDate: () => Date,
+}
+
 initializeApp(firebaseConfig);
 
 const db = getFirestore()

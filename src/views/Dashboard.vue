@@ -22,7 +22,7 @@
       <h1 class="mb-4 font-bold text-2xl">Recompensas</h1>
       <div class="flex flex-col gap-y-4 flex-grow justify-between">
         <div class="flex flex-col gap-y-4">
-          <ListedReward v-for="reward in []" :key="reward.id" :reward="reward"/>
+          <ListedReward v-for="reward in rewards" :key="reward.id" :reward="reward"/>
         </div>
         <AddReward @addReward="() => null" />
       </div>
@@ -34,7 +34,7 @@
 import { computed, defineComponent, onUnmounted, ref } from 'vue'
 import tasksService, { firestoreTaskConverter, FirestoreTaskGetter } from '@/services/tasks'
 import ListedTask from '@/components/ListedTask.vue';
-import { DaysOfWeek, Task, TaskFrequencyWeekly } from '@/utils/models';
+import { DaysOfWeek, Reward, Task, TaskFrequencyWeekly } from '@/utils/models';
 import { getDay, getWeek, isSameDay, isSameWeek } from 'date-fns';
 import ListedReward from '@/components/ListedReward.vue';
 import AddTask from '@/components/AddTask.vue';
@@ -44,18 +44,20 @@ import { useStore } from 'vuex';
 import { key } from '@/store';
 import { db } from '@/services/firebase';
 import { doc } from 'firebase/firestore'
+import rewardsService from '@/services/rewards';
 
 export default defineComponent({
   name: "Dashboard",
   components: { ListedTask, ListedReward, AddTask, AddReward },
   setup: () => {
     let tasks = ref<Task[]>([])
+    let rewards = ref<Reward[]>([])
 
     let store = useStore(key)
     console.log('/users/' + store.state.user.uid)
     let userRef = doc(db, 'users', store.state.user.uid)
 
-    const unsub = onSnapshot(query(tasksService, where("user", "==", userRef)), (snapshot) => {
+    const unsubTasks = onSnapshot(query(tasksService, where('user', '==', userRef)), (snapshot) => {
       let newTasks: Task[] = []
       snapshot.docs.forEach((task) => {
         newTasks.push(firestoreTaskConverter(task as unknown as FirestoreTaskGetter))
@@ -63,8 +65,17 @@ export default defineComponent({
       tasks.value = newTasks
     })
 
+    const unsubRewards = onSnapshot(query(rewardsService, where('user', '==', userRef)), (snapshot) => {
+      let newRewards: Reward[] = []
+      snapshot.docs.forEach((reward) => {
+        newRewards.push(reward.data() as unknown as Reward)
+      })
+      rewards.value = newRewards
+    })
+
     onUnmounted(() => {
-      unsub()
+      unsubTasks()
+      unsubRewards()
     })
     
     const todayTasks = computed(() => {
@@ -104,6 +115,7 @@ export default defineComponent({
     return {
       todayTasks,
       restOfWeekTasks,
+      rewards,
     }
   }
 });
