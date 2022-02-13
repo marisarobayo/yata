@@ -32,7 +32,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, onUnmounted, ref } from 'vue'
-import tasksService, { firestoreTaskConverter } from '@/services/tasks'
+import tasksService, { firestoreTaskConverter, FirestoreTaskGetter } from '@/services/tasks'
 import ListedTask from '@/components/ListedTask.vue';
 import { DaysOfWeek, Task, TaskFrequencyWeekly } from '@/utils/models';
 import { getDay, getWeek, isSameDay, isSameWeek } from 'date-fns';
@@ -56,9 +56,9 @@ export default defineComponent({
     let userRef = doc(db, 'users', store.state.user.uid)
 
     const unsub = onSnapshot(query(tasksService, where("user", "==", userRef)), (snapshot) => {
-      let newTasks: any[] = []
-      snapshot.docs.forEach((task: any) => {
-        newTasks.push(firestoreTaskConverter(task))
+      let newTasks: Task[] = []
+      snapshot.docs.forEach((task) => {
+        newTasks.push(firestoreTaskConverter(task as unknown as FirestoreTaskGetter))
       })
       tasks.value = newTasks
     })

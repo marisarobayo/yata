@@ -26,7 +26,7 @@ interface FirestoreTask {
   user: string,
 }
 
-interface FirestoreTaskGetter {
+export interface FirestoreTaskGetter {
   id: string,
   data: () => FirestoreTask,
 }
