@@ -31,7 +31,7 @@ export default defineComponent({
       task: Object as PropType<Task>
     },
     components: { Badge, Checkbox },
-    setup: (props) => {
+    setup: () => {
       return {
         datetime,
       }
