@@ -32,7 +32,6 @@ export default defineComponent({
     },
     components: { Badge, Checkbox },
     setup: (props) => {
-      console.log(props?.task)
       return {
         datetime,
       }

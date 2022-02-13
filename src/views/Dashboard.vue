@@ -54,7 +54,6 @@ export default defineComponent({
     let rewards = ref<Reward[]>([])
 
     let store = useStore(key)
-    console.log('/users/' + store.state.user.uid)
     let userRef = doc(db, 'users', store.state.user.uid)
 
     const unsubTasks = onSnapshot(query(tasksService, where('user', '==', userRef)), (snapshot) => {

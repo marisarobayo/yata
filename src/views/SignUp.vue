@@ -50,10 +50,8 @@ export default defineComponent({
     const router = useRouter()
 
     const submit = () => {
-      console.log(email.value, password.value)
       createUserWithEmailAndPassword(auth, email.value, password.value)
-        .then(cred => {
-          console.log(cred)
+        .then(() => {
           router.push({
             name: 'Dashboard',
           })
