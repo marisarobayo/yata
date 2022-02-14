@@ -1,6 +1,6 @@
 
 import { DaysOfWeek, Task } from "@/utils/models"
-import { collection } from "firebase/firestore"
+import { collection, doc, onSnapshot, query, where } from "firebase/firestore"
 import { db, FirestoreTimestamp } from "./firebase"
 
 const tasksService = collection(db, "tasks")
@@ -54,4 +54,14 @@ export function firestoreTaskConverter(task: FirestoreTaskGetter): Task {
   return result
 }
 
-//TODO service functions go here
+export function getTaskStream(uid: string, cb: (tasks: Task[]) => void): () => void {
+  const userRef = doc(db, 'users', uid)
+  const unsubTasks = onSnapshot(query(tasksService, where('user', '==', userRef)), (snapshot) => {
+    const newTasks: Task[] = []
+    snapshot.docs.forEach((task) => {
+      newTasks.push(firestoreTaskConverter(task as unknown as FirestoreTaskGetter))
+    })
+    cb(newTasks)
+  })
+  return unsubTasks
+}

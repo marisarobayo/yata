@@ -32,19 +32,16 @@
 
 <script lang="ts">
 import { computed, defineComponent, onUnmounted, ref } from 'vue'
-import tasksService, { firestoreTaskConverter, FirestoreTaskGetter } from '@/services/tasks'
+import { getTaskStream } from '@/services/tasks'
+import { getRewardStream } from '@/services/rewards'
 import ListedTask from '@/components/ListedTask.vue';
 import { DaysOfWeek, Reward, Task, TaskFrequencyWeekly } from '@/utils/models';
 import { getDay, getWeek, isSameDay, isSameWeek } from 'date-fns';
 import ListedReward from '@/components/ListedReward.vue';
 import AddTask from '@/components/AddTask.vue';
 import AddReward from '@/components/AddReward.vue';
-import { onSnapshot, query, where } from 'firebase/firestore';
 import { useStore } from 'vuex';
 import { key } from '@/store';
-import { db } from '@/services/firebase';
-import { doc } from 'firebase/firestore'
-import rewardsService from '@/services/rewards';
 
 export default defineComponent({
   name: "Dashboard",
@@ -54,23 +51,9 @@ export default defineComponent({
     let rewards = ref<Reward[]>([])
 
     let store = useStore(key)
-    let userRef = doc(db, 'users', store.state.user.uid)
 
-    const unsubTasks = onSnapshot(query(tasksService, where('user', '==', userRef)), (snapshot) => {
-      let newTasks: Task[] = []
-      snapshot.docs.forEach((task) => {
-        newTasks.push(firestoreTaskConverter(task as unknown as FirestoreTaskGetter))
-      })
-      tasks.value = newTasks
-    })
-
-    const unsubRewards = onSnapshot(query(rewardsService, where('user', '==', userRef)), (snapshot) => {
-      let newRewards: Reward[] = []
-      snapshot.docs.forEach((reward) => {
-        newRewards.push(reward.data() as unknown as Reward)
-      })
-      rewards.value = newRewards
-    })
+    const unsubTasks = getTaskStream(store.state.user.uid, newTasks => tasks.value = newTasks)
+    const unsubRewards = getRewardStream(store.state.user.uid, newRewards => rewards.value = newRewards)
 
     onUnmounted(() => {
       unsubTasks()
