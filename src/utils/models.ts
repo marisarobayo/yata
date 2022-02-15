@@ -15,7 +15,7 @@ export interface TaskFrequencyWeekly {
 }
 
 export interface Task {
-  id: string,
+  id?: string,
   title?: string,
   description?: string,
   difficulty?: 1 | 2 | 3 | 4,

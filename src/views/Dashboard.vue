@@ -7,7 +7,7 @@
         <div class="flex flex-col gap-y-4">
           <ListedTask v-for="task in todayTasks" :key="task.id" :task="task"/>
         </div>
-        <AddTask name="today" @addTask="() => null"/>
+        <AddTask name="today" @addTask="addTaskName"/>
       </div>
     </div>
     <div class="bg-white px-6 pt-6 pb-4 rounded-xl shadow-lg xl:min-h-[600px] lg:min-h-[400px] sm:min-h-[300px] flex flex-col">
@@ -32,7 +32,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, onUnmounted, ref } from 'vue'
-import { getTaskStream } from '@/services/tasks'
+import { addTask, getTaskStream } from '@/services/tasks'
 import { getRewardStream } from '@/services/rewards'
 import ListedTask from '@/components/ListedTask.vue';
 import { DaysOfWeek, Reward, Task, TaskFrequencyWeekly } from '@/utils/models';
@@ -94,10 +94,30 @@ export default defineComponent({
       })
     })
 
+    const addTaskName = (name: string) => {
+      let now = new Date()
+      let today = getDay(now)
+
+      let newTask = {
+        title: name,
+        difficulty: 1,
+        user: store.state.user.uid,
+        frequency: {
+          daysOfWeek: [
+            today,
+          ],
+          time: now
+        }
+      } as Task
+
+      addTask(newTask)
+    }
+
     return {
       todayTasks,
       restOfWeekTasks,
       rewards,
+      addTaskName,
     }
   }
 });

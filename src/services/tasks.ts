@@ -1,6 +1,6 @@
 
 import { DaysOfWeek, Task } from "@/utils/models"
-import { collection, doc, onSnapshot, query, where } from "firebase/firestore"
+import { addDoc, collection, doc, onSnapshot, query, Timestamp, where } from "firebase/firestore"
 import { db, FirestoreTimestamp } from "./firebase"
 
 const tasksService = collection(db, "tasks")
@@ -13,7 +13,7 @@ export interface TaskFrequencyWeekly {
 }
 
 interface FirestoreTask {
-  id: string,
+  id?: string,
   title?: string,
   description?: string,
   difficulty?: 1 | 2 | 3 | 4,
@@ -64,4 +64,27 @@ export function getTaskStream(uid: string, cb: (tasks: Task[]) => void): () => v
     cb(newTasks)
   })
   return unsubTasks
+}
+
+export function addTask(task: Task): void {
+  let req: FirestoreTask
+  if (task.frequency instanceof Date) {
+    req = {
+      ...task,
+      frequency: Timestamp.fromDate(task.frequency),
+    }
+  }  else {
+    req = {
+      ...task,
+      frequency: {
+        daysOfWeek: task.frequency.daysOfWeek,
+        time: Timestamp.fromDate(task.frequency.time)
+      }
+    }
+  }
+
+  addDoc(tasksService, {
+    ...req,
+    user: doc(db, 'users', req.user),
+  })
 }
