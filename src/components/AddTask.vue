@@ -32,6 +32,7 @@ export default defineComponent({
       const submitTask = () => {
         if (taskName.value) {
           context.emit('addTask', taskName.value)
+          taskName.value = ""
         }
       }
 
