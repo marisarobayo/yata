@@ -1,6 +1,6 @@
 
 import { Reward } from "@/utils/models"
-import { collection, doc, onSnapshot, query, where } from "firebase/firestore"
+import { addDoc, collection, doc, onSnapshot, query, where } from "firebase/firestore"
 import { db } from "./firebase"
 
 const rewardsService = collection(db, "rewards")
@@ -17,4 +17,11 @@ export function getRewardStream(uid: string, cb: (tasks: Reward[]) => void): () 
     cb(newRewards)
   })
   return unsubRewards
+}
+
+export function addReward(reward: Reward): void {
+  addDoc(rewardsService, {
+    ...reward,
+    user: doc(db, 'users', reward.user),
+  })
 }

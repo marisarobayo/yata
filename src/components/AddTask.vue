@@ -6,8 +6,8 @@
       placeholder="Añade una tarea"
       v-model="taskName"
     />
-    <ButtonPrimary>
-      <font-awesome-icon icon="plus" @click="submitTask" />
+    <ButtonPrimary @click="submitTask">
+      <font-awesome-icon icon="plus" />
     </ButtonPrimary>
   </span>
 </template>

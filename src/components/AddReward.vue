@@ -6,8 +6,8 @@
       placeholder="Recompénsate"
       v-model="rewardName"
     />
-    <ButtonPrimary>
-      <font-awesome-icon icon="plus" @click="submitTask" />
+    <ButtonPrimary @click="submitReward">
+      <font-awesome-icon icon="plus" />
     </ButtonPrimary>
   </span>
 </template>
@@ -25,18 +25,17 @@ export default defineComponent({
     },
     setup (_props, context) {
       const rewardName = ref('')
-      const rewardCost = ref('')
 
-      const submitTask = () => {
-        if (rewardName.value && rewardCost.value) {
-          context.emit('addReward', rewardName.value, rewardCost.value)
+      const submitReward = () => {
+        if (rewardName.value) {
+          context.emit('addReward', rewardName.value)
+          rewardName.value = ""
         }
       }
 
       return {
         rewardName,
-        rewardCost,
-        submitTask,
+        submitReward,
       }
     },
     emits: ['addReward'],

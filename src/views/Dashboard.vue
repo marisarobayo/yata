@@ -24,7 +24,7 @@
         <div class="flex flex-col gap-y-4">
           <ListedReward v-for="reward in rewards" :key="reward.id" :reward="reward"/>
         </div>
-        <AddReward @addReward="() => null" />
+        <AddReward @addReward="addRewardName" />
       </div>
     </div>
   </div>
@@ -33,7 +33,7 @@
 <script lang="ts">
 import { computed, defineComponent, onUnmounted, ref } from 'vue'
 import { addTask, getTaskStream } from '@/services/tasks'
-import { getRewardStream } from '@/services/rewards'
+import { addReward, getRewardStream } from '@/services/rewards'
 import ListedTask from '@/components/ListedTask.vue';
 import { DaysOfWeek, Reward, Task, TaskFrequencyWeekly } from '@/utils/models';
 import { getDay, getWeek, isSameDay, isSameWeek } from 'date-fns';
@@ -113,11 +113,22 @@ export default defineComponent({
       addTask(newTask)
     }
 
+    const addRewardName = (name: string) => {
+      let newReward = {
+        user: store.state.user.uid,
+        cost: 10,
+        name,
+      } as Reward
+
+      addReward(newReward)
+    }
+
     return {
       todayTasks,
       restOfWeekTasks,
       rewards,
       addTaskName,
+      addRewardName,
     }
   }
 });
