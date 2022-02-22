@@ -2,24 +2,26 @@
 <template>
   <div v-if="open">
     <Teleport to="body">
-      <div class="fixed top-0 bottom-0 left-0 right-0 bg-zinc-500 z-50">
+      <div class="fixed top-0 bottom-0 left-0 right-0 bg-zinc-500 z-50" @click="$emit('close')">
         <div class="m-auto p-12 max-w-5xl">
-          <div class="bg-white rounded-xl">
-            <div class="pt-6 pb-4 pr-12 pl-6 border-b border-zinc-300 shadow-sm inline-flex w-full justify-between items-center text-xl">
+          <div class="bg-white rounded-xl" @click.prevent.stop>
+            <div class="pt-4 pb-4 px-12 border-b border-zinc-300 shadow-sm inline-flex w-full justify-between items-center text-2xl">
               <div>
-                <slot name="icon"></slot>
+                <span class="text-gray-600 mr-2">
+                  <slot name="icon"></slot>
+                </span>
                 <span class="font-medium">
                   <slot name="title"></slot>
                 </span>
               </div>
-              <span class="text-zinc-500" @click="$emit('close')">
+              <span class="text-zinc-400 hover:text-zinc-600 cursor-pointer text-xl" @click="$emit('close')">
                 <font-awesome-icon icon="times" />
               </span>
             </div>
-            <div class="pt-6 px-12 pb-4">
+            <div class="pt-6 px-12 pb-6">
               <slot name="content"></slot>
             </div>
-            <div class="pt-2 px-12 pb-8 flex">
+            <div class="pt-2 px-12 pb-4 flex justify-center">
               <slot name="actions"></slot>
             </div>
           </div>
