@@ -33,6 +33,7 @@ export default defineComponent({
     placeholder: String,
     modelValue: String,
     options: Array as PropType<Array<Option>>
-  }
+  },
+  emits: ['update:modelValue'],
 })
 </script>
