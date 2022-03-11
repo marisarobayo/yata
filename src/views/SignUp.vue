@@ -53,7 +53,7 @@ export default defineComponent({
       createUserWithEmailAndPassword(auth, email.value, password.value)
         .then(() => {
           router.push({
-            name: 'Dashboard',
+            name: 'Home',
           })
         })
         .catch(err => {
