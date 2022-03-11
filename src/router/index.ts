@@ -37,7 +37,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (!store.state.status.loggedIn) {
-    if (to.name !== 'Home') {
+    if (to.name !== 'Home' && to.name !== 'SignUp') {
       next('Home')
     } else {
       next()
