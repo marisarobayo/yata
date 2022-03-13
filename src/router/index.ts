@@ -43,7 +43,7 @@ router.beforeEach((to, from, next) => {
       next()
     }
   } else {
-    if (to.name === 'Home') {
+    if (to.name === 'Home' || to.name === 'SignUp') {
       next('Dashboard')
     } else {
       next()

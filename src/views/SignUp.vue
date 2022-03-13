@@ -36,9 +36,10 @@
 
 import { defineComponent, ref } from "vue";
 import Input from "@/components/Input.vue"
-import { auth } from '@/services/firebase'
+import { auth, db } from '@/services/firebase'
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "vue-router";
+import { doc, setDoc } from "firebase/firestore";
 
 export default defineComponent({
   name: "SignUp",
@@ -51,10 +52,14 @@ export default defineComponent({
 
     const submit = () => {
       createUserWithEmailAndPassword(auth, email.value, password.value)
-        .then(() => {
-          router.push({
-            name: 'Home',
-          })
+        .then((usr) => {
+          console.log(usr)
+          setDoc(doc(db, 'users', usr.user.uid), {})
+            .then(() =>
+              router.push({
+                name: 'Home'
+              })
+            )
         })
         .catch(err => {
           console.log(err)
