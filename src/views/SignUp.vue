@@ -53,7 +53,6 @@ export default defineComponent({
     const submit = () => {
       createUserWithEmailAndPassword(auth, email.value, password.value)
         .then((usr) => {
-          console.log(usr)
           setDoc(doc(db, 'users', usr.user.uid), {})
             .then(() =>
               router.push({
