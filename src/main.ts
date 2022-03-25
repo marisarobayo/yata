@@ -5,7 +5,7 @@ import router from './router'
 import store, { key } from './store'
 import vClickOutside from 'click-outside-vue3';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPlus, faBullseye, faCoins, faUser, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faBullseye, faCoins, faUser, faTimes, faTasks } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import "@/assets/styles/main.css";
 
@@ -14,6 +14,7 @@ library.add(faBullseye)
 library.add(faCoins)
 library.add(faUser)
 library.add(faTimes)
+library.add(faTasks)
 
 createApp(App)
   .use(store, key)

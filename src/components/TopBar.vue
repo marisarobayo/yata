@@ -17,10 +17,11 @@
           <font-awesome-icon icon="bullseye" class="text-2xl"/>
           {{user.streakDays}} días
         </div>
-        <div>
+        <div @click.stop="() => newTaskOpen = true">
           <ButtonPrimary>
             <font-awesome-icon icon="plus" />
           </ButtonPrimary>
+          <EditTaskModal @close="() => newTaskOpen = false" :open="newTaskOpen" />
         </div>
         <div class="relative px-2" v-click-outside="() => userMenuOpen = false">
           <ButtonSecondary @click="openMenu">
@@ -45,17 +46,20 @@ import ButtonPrimary from "./ButtonPrimary.vue";
 import { useStore } from "vuex";
 import { key } from "@/store";
 import ButtonSecondary from "./ButtonSecondary.vue";
+import EditTaskModal from "./EditTaskModal.vue";
 
 export default defineComponent({
   name: 'TopBar',
   components: {
     ButtonPrimary,
-    ButtonSecondary
+    ButtonSecondary,
+    EditTaskModal
 },
   setup: () => {
     const store = useStore(key)
 
     const userMenuOpen = ref(false)
+    const newTaskOpen = ref(false)
     
     let openMenu = () => {
       userMenuOpen.value = !userMenuOpen.value
@@ -72,6 +76,7 @@ export default defineComponent({
       userMenuOpen,
       openMenu,
       logout,
+      newTaskOpen,
     }
   }
 })
