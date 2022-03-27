@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../views/Home.vue'
 import Dashboard from '../views/Dashboard.vue'
-import SignUp from '../views/SignUp.vue'
 import store from '@/store'
+import SignIn from '../views/SignIn.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -16,9 +16,9 @@ const routes: Array<RouteRecordRaw> = [
     component: Dashboard,
   },
   {
-    path: '/signup',
-    name: 'SignUp',
-    component: SignUp,
+    path: '/signin',
+    name: 'SignIn',
+    component: SignIn,
   }
   //{
     //path: '/about',
@@ -37,13 +37,13 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (!store.state.status.loggedIn) {
-    if (to.name !== 'Home' && to.name !== 'SignUp') {
+    if (to.name !== 'Home' && to.name !== 'SignIn') {
       next('Home')
     } else {
       next()
     }
   } else {
-    if (to.name === 'Home' || to.name === 'SignUp') {
+    if (to.name === 'Home' || to.name === 'SignIn') {
       next('Dashboard')
     } else {
       next()

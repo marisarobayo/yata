@@ -6,7 +6,7 @@
         <span class="text-3xl tracking-wider font-bold">YATA</span>
       </div>
       <div class="p-2" v-if="!user">
-        <ButtonPrimary @click="$router.push('/dashboard')">Iniciar sesión</ButtonPrimary>
+        <ButtonPrimary @click="$router.push('/signin')">Iniciar sesión</ButtonPrimary>
       </div>
       <div v-if="user" class="flex items-center gap-x-8">
         <div class="flex items-center gap-x-2">

@@ -3,7 +3,7 @@
   <div class="max-w-7xl flex flex-col mx-auto my-16">
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
       <h2 class="mt-6 text-center text-4xl font-medium text-gray-900">
-        Inicia sesión
+        Regístrate
       </h2>
     </div>
 
@@ -23,9 +23,15 @@
             type="password"
           />
           <div>
-            <button @click.prevent="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-              Iniciar sesión
+            <button @click.prevent="signUp" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              Registrarse
             </button>
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-2 bg-white text-gray-500">
+              ¿Ya tienes una cuenta? 
+              <router-link to="/signin" class="font-medium text-teal-600 hover:text-teal-500">Inicia sesión</router-link>
+            </span>
           </div>
         </form>
       </div>
@@ -53,6 +59,9 @@ import { useStore } from 'vuex';
 
 import Input from '@/components/Input.vue';
 import { key } from '@/store';
+import { createUserWithEmailAndPassword } from '@firebase/auth';
+import { auth, db } from '@/services/firebase';
+import { doc, setDoc } from '@firebase/firestore';
 
 export default defineComponent({
   name: 'Home',
@@ -63,17 +72,26 @@ export default defineComponent({
 
     const store = useStore(key)
 
-    const submit = () => {
-      store.dispatch('login', {
-        email: email.value,
-        password: password.value,
-      })
+    const signUp = () => {
+      createUserWithEmailAndPassword(auth, email.value, password.value)
+        .then((usr) => {
+          setDoc(doc(db, 'users', usr.user.uid), {})
+            .then(() =>
+              store.dispatch('login', {
+                email: email.value,
+                password: password.value,
+              })
+            )
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
 
     return {
       email,
       password,
-      submit,
+      signUp,
     }
   }
 });
