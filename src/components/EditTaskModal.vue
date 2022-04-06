@@ -52,14 +52,14 @@
     </template>
     <template #actions>
       <ButtonPrimary :disabled="!type || !name || type === 'habit' && !daysOfWeek.length" @click="submit">
-        Crear tarea
+        {{isEdit ? 'Editar tarea' : 'Crear tarea'}}
       </ButtonPrimary>
     </template>
   </Modal>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, PropType, ref } from "vue";
 import Modal from './Modal.vue'
 import ButtonPrimary from './ButtonPrimary.vue'
 import Input from './Input.vue'
@@ -68,15 +68,16 @@ import Select from "./Select.vue";
 import HorizontalRadioGroup from "./HorizontalRadioGroup.vue";
 import DatetimePicker from "./DatetimePicker.vue";
 import Multiselect from "./Multiselect.vue";
-import { DaysOfWeek, Task } from "@/utils/models";
+import { DaysOfWeek, Task, TaskFrequencyWeekly } from "@/utils/models";
 import { useStore } from "vuex";
 import { key } from "@/store";
-import { addTask } from "@/services/tasks";
+import { addTask, updateTask } from "@/services/tasks";
 
 export default defineComponent({
   name: 'EditTaskModal',
   props: {
     open: Boolean,
+    task: Object as PropType<Task>,
   },
   emits: ['close'],
   components: {
@@ -89,16 +90,19 @@ export default defineComponent({
     DatetimePicker,
     Multiselect
 },
-  setup: (_props, context) => {
+  setup: (props, context) => {
     const store = useStore(key)
 
-    const name = ref('')
-    const description = ref('')
-    const difficulty = ref<('1' | '2' | '3' | '4')>('1')
-    const type = ref<'task' | 'habit' | ''>('')
-    const singularDate = ref<Date>(new Date())
-    const repeatedTime = ref<Date>(new Date())
-    const daysOfWeek = ref<string[]>([])
+    let isEdit = computed(() => !!props.task)
+    let isTask = props.task?.frequency instanceof Date
+
+    const name = ref(isEdit.value ? props.task?.title : '')
+    const description = ref(isEdit.value ? props.task?.description : '')
+    const difficulty = ref<('1' | '2' | '3' | '4')>(isEdit.value ? props.task?.difficulty?.toString() as ('1' | '2' | '3' | '4') : '1')
+    const type = ref<'task' | 'habit' | ''>(isEdit.value ? (isTask ? 'task' : 'habit') : '')
+    const singularDate = ref<Date>(((isEdit.value && isTask) ? props.task?.frequency : new Date()) as Date)
+    const repeatedTime = ref<Date>((!isTask && isEdit.value) ? (props.task?.frequency as TaskFrequencyWeekly).time : new Date())
+    const daysOfWeek = ref<string[]>((!isTask && isEdit.value) ? (props.task?.frequency as TaskFrequencyWeekly).daysOfWeek.map(val => val.toString()) : [])
 
     let user = computed(() => store.state.user)
 
@@ -118,7 +122,14 @@ export default defineComponent({
         }
       }
 
-      await addTask(req)
+      if (isEdit.value) {
+        req.id = props.task?.id
+        await updateTask(req)
+      } else {
+        await addTask(req)
+      }
+
+      
       context.emit('close')
     }
 
@@ -131,6 +142,7 @@ export default defineComponent({
       repeatedTime,
       daysOfWeek,
       submit,
+      isEdit,
     }
   }
 })

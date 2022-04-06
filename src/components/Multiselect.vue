@@ -7,7 +7,7 @@
       mode="tags"
       :placeholder="placeholder"
       :options="options"
-      noOptionsText="No hay días"
+      noOptionsText="No hay opciones"
       noResultsText="No hay resultados"
       class="mt-1 w-full text-base border-gray-300 focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:shadow-none focus:border-2 sm:text-sm rounded-md"
       @change="(value: string[]) => $emit('update:modelValue', value)"

@@ -1,6 +1,6 @@
 
 import { DaysOfWeek, Task } from "@/utils/models"
-import { addDoc, collection, doc, onSnapshot, query, Timestamp, where } from "firebase/firestore"
+import { addDoc, collection, doc, onSnapshot, query, Timestamp, updateDoc, where } from "firebase/firestore"
 import { db, FirestoreTimestamp } from "./firebase"
 
 const tasksService = collection(db, "tasks")
@@ -55,12 +55,15 @@ export function firestoreTaskConverter(task: FirestoreTaskGetter): Task {
 }
 
 export function getTaskStream(uid: string, cb: (tasks: Task[]) => void): () => void {
+  console.log(uid)
   const userRef = doc(db, 'users', uid)
   const unsubTasks = onSnapshot(query(tasksService, where('user', '==', userRef)), (snapshot) => {
     const newTasks: Task[] = []
     snapshot.docs.forEach((task) => {
+      console.log(task)
       newTasks.push(firestoreTaskConverter(task as unknown as FirestoreTaskGetter))
     })
+    console.log(newTasks)
     cb(newTasks)
   })
   return unsubTasks
@@ -86,5 +89,30 @@ export function addTask(task: Task): void {
   addDoc(tasksService, {
     ...req,
     user: doc(db, 'users', req.user),
+  })
+}
+
+export function updateTask(task: Task): void {
+  let req: FirestoreTask
+  if (task.frequency instanceof Date) {
+    req = {
+      ...task,
+      frequency: Timestamp.fromDate(task.frequency),
+    }
+  }  else {
+    req = {
+      ...task,
+      frequency: {
+        daysOfWeek: task.frequency.daysOfWeek,
+        time: Timestamp.fromDate(task.frequency.time)
+      }
+    }
+  }
+
+  const docRef = doc(db, 'tasks', task.id as string)
+
+  updateDoc(docRef, {
+    ...req,
+    user: doc(db, 'users', req.user)
   })
 }
