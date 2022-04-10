@@ -55,15 +55,12 @@ export function firestoreTaskConverter(task: FirestoreTaskGetter): Task {
 }
 
 export function getTaskStream(uid: string, cb: (tasks: Task[]) => void): () => void {
-  console.log(uid)
   const userRef = doc(db, 'users', uid)
   const unsubTasks = onSnapshot(query(tasksService, where('user', '==', userRef)), (snapshot) => {
     const newTasks: Task[] = []
     snapshot.docs.forEach((task) => {
-      console.log(task)
       newTasks.push(firestoreTaskConverter(task as unknown as FirestoreTaskGetter))
     })
-    console.log(newTasks)
     cb(newTasks)
   })
   return unsubTasks

@@ -5,7 +5,7 @@
       <font-awesome-icon icon="tasks" />
     </template>
     <template #title>
-      Nueva tarea
+      {{isEdit ? 'Editar tarea' : 'Nueva tarea'}}
     </template>
     <template #content>
       <div class="flex flex-col gap-y-6">
