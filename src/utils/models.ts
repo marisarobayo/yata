@@ -24,7 +24,7 @@ export interface Task {
 }
 
 export interface Reward {
-  id: string,
+  id?: string,
   name: string,
   cost: number,
   user: string,
