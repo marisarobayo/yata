@@ -108,8 +108,10 @@ export function updateTask(task: Task): void {
 
   const docRef = doc(db, 'tasks', task.id as string)
 
-  updateDoc(docRef, {
+  const data = {
     ...req,
     user: doc(db, 'users', req.user)
-  })
+  }
+  delete data.id
+  updateDoc(docRef, data)
 }

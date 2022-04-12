@@ -115,6 +115,10 @@ export default defineComponent({
         user: user.value.uid,
       }
 
+      if (!description.value) {
+        delete req.description
+      }
+
       if (type.value === 'habit') {
         req.frequency = {
           daysOfWeek: daysOfWeek.value.map(val => parseInt(val)) as DaysOfWeek[],
