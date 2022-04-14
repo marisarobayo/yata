@@ -1,10 +1,10 @@
 
 <template>
-  <span class="h-2 w-2 rounded-2xl text-blue-500 border-gray-900 focus:ring-blue-400">
+  <span class="h-2 w-2 rounded-2xl text-teal-500 border-gray-900 focus:ring-teal-400">
     <input
       v-model="isChecked"
       type="checkbox"
-      class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+      class="focus:ring-teal-500 h-4 w-4 text-teal-600 border-gray-300 rounded"
     />
   </span>
 </template>

@@ -4,7 +4,7 @@
     <div class="bg-white px-4 pt-6 pb-4 rounded-xl shadow-lg xl:min-h-[600px] lg:min-h-[400px] sm:min-h-[300px] flex flex-col">
       <h1 class="mb-4 px-2 font-bold text-2xl">Para hoy</h1>
       <div class="flex flex-col gap-y-4 flex-grow justify-between">
-        <div class="flex flex-col gap-y-4">
+        <div class="flex flex-col gap-y-2">
           <ListedTask v-for="task in todayTasks" :key="task.id" :task="task"/>
         </div>
         <AddTask name="today" @addTask="addTaskName"/>
@@ -13,7 +13,7 @@
     <div class="bg-white px-4 pt-6 pb-4 rounded-xl shadow-lg xl:min-h-[600px] lg:min-h-[400px] sm:min-h-[300px] flex flex-col">
       <h1 class="mb-4 px-2 font-bold text-2xl">Resto de semana</h1>
       <div class="flex flex-col gap-y-4 flex-grow justify-between">
-        <div class="flex flex-col gap-y-4">
+        <div class="flex flex-col gap-y-2">
           <ListedTask v-for="task in restOfWeekTasks" :key="task.id" :task="task"/>
         </div>
       </div>
@@ -21,7 +21,7 @@
     <div class="bg-white px-4 pt-6 pb-4 rounded-xl shadow-lg xl:min-h-[600px] lg:min-h-[400px] sm:min-h-[300px] flex flex-col">
       <h1 class="mb-4 px-2 font-bold text-2xl">Recompensas</h1>
       <div class="flex flex-col gap-y-4 flex-grow justify-between">
-        <div class="flex flex-col gap-y-4">
+        <div class="flex flex-col gap-y-2">
           <ListedReward v-for="reward in rewards" :key="reward.id" :reward="reward"/>
         </div>
         <AddReward @addReward="addRewardName" />
