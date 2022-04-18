@@ -113,6 +113,7 @@ export default defineComponent({
         difficulty: parseInt(difficulty.value) as (1 | 2 | 3 | 4),
         frequency: singularDate.value as Date,
         user: user.value.uid,
+        completed: isEdit.value ? props.task?.completed as boolean : false,
       }
 
       if (!description.value) {

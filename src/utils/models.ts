@@ -21,6 +21,7 @@ export interface Task {
   difficulty?: 1 | 2 | 3 | 4,
   frequency: Date | TaskFrequencyWeekly,
   user: string,
+  completed: boolean,
 }
 
 export interface Reward {

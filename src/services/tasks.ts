@@ -19,6 +19,7 @@ interface FirestoreTask {
   difficulty?: 1 | 2 | 3 | 4,
   frequency: FirestoreTimestamp | TaskFrequencyWeekly,
   user: string,
+  completed: boolean,
 }
 
 export interface FirestoreTaskGetter {
@@ -66,7 +67,7 @@ export function getTaskStream(uid: string, cb: (tasks: Task[]) => void): () => v
   return unsubTasks
 }
 
-export function addTask(task: Task): void {
+export async function addTask(task: Task): Promise<void> {
   let req: FirestoreTask
   if (task.frequency instanceof Date) {
     req = {
@@ -83,13 +84,13 @@ export function addTask(task: Task): void {
     }
   }
 
-  addDoc(tasksService, {
+  await addDoc(tasksService, {
     ...req,
     user: doc(db, 'users', req.user),
   })
 }
 
-export function updateTask(task: Task): void {
+export async function updateTask(task: Task): Promise<void> {
   let req: FirestoreTask
   if (task.frequency instanceof Date) {
     req = {
@@ -113,5 +114,5 @@ export function updateTask(task: Task): void {
     user: doc(db, 'users', req.user)
   }
   delete data.id
-  updateDoc(docRef, data)
+  await updateDoc(docRef, data)
 }
