@@ -75,7 +75,10 @@ export default defineComponent({
     const signUp = () => {
       createUserWithEmailAndPassword(auth, email.value, password.value)
         .then((usr) => {
-          setDoc(doc(db, 'users', usr.user.uid), {})
+          setDoc(doc(db, 'users', usr.user.uid), {
+            coins: 0,
+            streakDays: 0,
+          })
             .then(() =>
               store.dispatch('login', {
                 email: email.value,

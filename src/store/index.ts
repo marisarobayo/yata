@@ -1,7 +1,8 @@
 import router from '@/router'
-import { auth } from '@/services/firebase'
+import { auth, db } from '@/services/firebase'
 import { User } from '@/utils/models'
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { doc, getDoc } from 'firebase/firestore'
 import { InjectionKey } from 'vue'
 import { createStore, Store } from 'vuex'
 
@@ -44,8 +45,10 @@ export default createStore({
   actions: {
     login({ commit }, user) {
       signInWithEmailAndPassword(auth, user.email, user.password)
-        .then((cred) => {
-          commit('loginSuccess', cred.user)
+        .then(async (cred) => {
+          const userDoc = doc(db, 'users', cred.user.uid)
+          const userInfo = await getDoc(userDoc)
+          commit('loginSuccess', userInfo.data())
           localStorage.setItem('user', JSON.stringify(cred.user));
           router.push('/dashboard')
         })
