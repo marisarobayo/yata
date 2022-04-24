@@ -2,7 +2,7 @@ import router from '@/router'
 import { auth, db } from '@/services/firebase'
 import { User } from '@/utils/models'
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { InjectionKey } from 'vue'
 import { createStore, Store } from 'vuex'
 
@@ -48,8 +48,12 @@ export default createStore({
         .then(async (cred) => {
           const userDoc = doc(db, 'users', cred.user.uid)
           const userInfo = await getDoc(userDoc)
-          commit('loginSuccess', userInfo.data())
-          localStorage.setItem('user', JSON.stringify(cred.user));
+          const userData = {
+            ...userInfo.data(),
+            uid: cred.user.uid,
+          }
+          commit('loginSuccess', userData)
+          localStorage.setItem('user', JSON.stringify(userData));
           router.push('/dashboard')
         })
     },
@@ -61,6 +65,13 @@ export default createStore({
           router.push('/')
         })
     },
+    updateUser({ commit }, user) {
+      setDoc(doc(db, 'users', user.uid), user)
+        .then(() => {
+          commit('loginSuccess', user)
+          localStorage.setItem('user', JSON.stringify(user));
+        })
+    }
   },
   modules: {
   }

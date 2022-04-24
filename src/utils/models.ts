@@ -35,7 +35,5 @@ export interface User {
   name: string,
   coins: number,
   streakDays: number,
-  tasks: Task[],
-  rewards: Reward[],
   uid: string,
 }

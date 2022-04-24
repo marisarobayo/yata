@@ -1,5 +1,6 @@
 
-import { DaysOfWeek, Task } from "@/utils/models"
+import store from "@/store"
+import { DaysOfWeek, Task, User } from "@/utils/models"
 import { addDoc, collection, doc, onSnapshot, query, Timestamp, updateDoc, where } from "firebase/firestore"
 import { db, FirestoreTimestamp } from "./firebase"
 
@@ -106,13 +107,29 @@ export async function updateTask(task: Task): Promise<void> {
       }
     }
   }
-
   const docRef = doc(db, 'tasks', task.id as string)
 
   const data = {
     ...req,
-    user: doc(db, 'users', req.user)
+    user: typeof req.user === 'object' ? req.user : doc(db, 'users', req.user)
   }
   delete data.id
   await updateDoc(docRef, data)
+}
+
+export async function checkTask(task: Task, user: User, value: boolean): Promise<void> {
+  if (task.completed === value) {
+    return
+  }
+
+  task.completed = value
+  await updateTask(task)
+
+  if (value) {
+    user.coins += task.difficulty ?? 1
+  } else {
+    user.coins -= task.difficulty ?? 1
+  }
+
+  store.dispatch('updateUser', user)
 }

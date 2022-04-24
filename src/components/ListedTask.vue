@@ -2,7 +2,7 @@
 <template>
   <div class="flex gap-x-3 p-2 rounded-md hover:bg-zinc-200 hover:shadow-sm" @mouseover="editButtonVisible = true" @mouseleave="editButtonVisible = false">
     <div>
-      <Checkbox :checked="false"/>
+      <Checkbox :checked="task?.completed" @change="(value) => onCompletedClick(value)"/>
     </div>
     <div class="break-words max-w-[100px]">
       {{task?.title}}
@@ -27,12 +27,15 @@
 </template>
 
 <script lang="ts">
+import { useStore } from 'vuex';
+import { key } from '@/store';
 import { Task } from "@/utils/models";
 import { defineComponent, PropType, ref } from "vue";
 import { datetime } from "@/utils/formatting";
 import Badge from "./Badge.vue";
 import EditTaskModal from "./EditTaskModal.vue";
 import Checkbox from "./Checkbox.vue";
+import { checkTask } from "@/services/tasks"
 
 export default defineComponent({
     name: "ListedTask",
@@ -40,14 +43,24 @@ export default defineComponent({
       task: Object as PropType<Task>
     },
     components: { Badge, Checkbox, EditTaskModal },
-    setup: () => {
+    setup: (props) => {
+      const store = useStore(key)
+
       let editButtonVisible = ref(false)
       let editingTask = ref(false)
+
+      const onCompletedClick = (value: boolean) => {
+        if (!props.task) {
+          return
+        }
+        checkTask(props.task, store.state.user, value)
+      }
 
       return {
         datetime,
         editButtonVisible,
         editingTask,
+        onCompletedClick,
       }
     }
 })
