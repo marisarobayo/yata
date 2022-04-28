@@ -37,14 +37,14 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (!store.state.status.loggedIn) {
-    if (to.name !== 'Home' && to.name !== 'SignIn') {
-      next('Home')
+    if (to.name !== 'Home' && to.name !== 'SignIn' && to.name) {
+      next('/')
     } else {
       next()
     }
   } else {
     if (to.name === 'Home' || to.name === 'SignIn') {
-      next('Dashboard')
+      next('/dashboard')
     } else {
       next()
     }
