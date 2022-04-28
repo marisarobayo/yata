@@ -1,7 +1,7 @@
 import router from '@/router'
 import { auth, db } from '@/services/firebase'
 import { User } from '@/utils/models'
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { InjectionKey } from 'vue'
 import { createStore, Store } from 'vuex'
@@ -23,10 +23,17 @@ const initialState = userItem ? {
   status: { loggedIn: false },
   user: null
 }
+onAuthStateChanged(auth, user => {
+  if (!user && router.currentRoute.value.path !== '/') {
+    store.commit('logout')
+    localStorage.removeItem('user')
+    router.push('/')
+  }
+})
 
 export const key: InjectionKey<Store<State>> = Symbol()
 
-export default createStore({
+const store = createStore({
   state: initialState,
   mutations: {
     loginSuccess(state, user) {
@@ -76,3 +83,6 @@ export default createStore({
   modules: {
   }
 })
+
+
+export default store
