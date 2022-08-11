@@ -1,6 +1,6 @@
 
 <template>
-  <span class="inline-flex justify-center items-center py-1 gap-x-2">
+  <span class="inline-flex justify-center items-center py-1 px-2 gap-x-2">
     <InputNoLabel
       :name="name"
       placeholder="Añade una tarea"

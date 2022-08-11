@@ -24,16 +24,8 @@ export interface Task {
   completed: boolean,
 }
 
-export interface Reward {
-  id?: string,
-  name: string,
-  cost: number,
-  user: string,
-}
-
 export interface User {
   name: string,
-  coins: number,
   streakDays: number,
   uid: string,
 }

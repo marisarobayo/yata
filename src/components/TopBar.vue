@@ -9,10 +9,6 @@
         <ButtonPrimary @click="$router.push('/signin')">Iniciar sesión</ButtonPrimary>
       </div>
       <div v-if="user" class="flex items-center gap-x-8">
-        <div class="flex items-center gap-x-2">
-          <font-awesome-icon icon="coins" class="text-2xl" />
-          {{user.coins}}
-        </div>
         <div class="text items-center gap-x-2">
           <font-awesome-icon icon="bullseye" class="text-2xl"/>
           {{user.streakDays}} días

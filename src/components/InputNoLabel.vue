@@ -4,7 +4,7 @@
     :type="type"
     :name="name"
     :id="name"
-    class="shadow-sm focus:ring-teal-500 focus:border-teal-500 block sm:text-sm border-gray-300 rounded-md"
+    class="shadow-sm focus:ring-teal-500 focus:border-teal-500 block sm:text-sm border-gray-300 rounded-md w-full"
     :placeholder="placeholder"
     :value="modelValue"
     @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"

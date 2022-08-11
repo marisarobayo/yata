@@ -1,7 +1,7 @@
 
 <template>
   <div class="flex max-w-7xl mx-auto gap-x-16 justify-center">
-    <div class="bg-white px-4 pt-6 pb-4 rounded-xl shadow-lg xl:min-h-[600px] lg:min-h-[400px] sm:min-h-[300px] flex flex-col">
+    <div class="bg-white px-4 pt-6 pb-4 rounded-xl shadow-lg xl:min-h-[600px] lg:min-h-[400px] sm:min-h-[300px] md:w-1/3 flex flex-col">
       <h1 class="mb-4 px-2 font-bold text-2xl">Para hoy</h1>
       <div class="flex flex-col gap-y-4 flex-grow justify-between">
         <div class="flex flex-col gap-y-2">
@@ -10,21 +10,12 @@
         <AddTask name="today" @addTask="addTaskName"/>
       </div>
     </div>
-    <div class="bg-white px-4 pt-6 pb-4 rounded-xl shadow-lg xl:min-h-[600px] lg:min-h-[400px] sm:min-h-[300px] flex flex-col">
+    <div class="bg-white px-4 pt-6 pb-4 rounded-xl shadow-lg xl:min-h-[600px] lg:min-h-[400px] sm:min-h-[300px] w-1/3 flex flex-col">
       <h1 class="mb-4 px-2 font-bold text-2xl">Resto de semana</h1>
       <div class="flex flex-col gap-y-4 flex-grow justify-between">
         <div class="flex flex-col gap-y-2">
           <ListedTask v-for="task in restOfWeekTasks" :key="task.id" :task="task"/>
         </div>
-      </div>
-    </div>
-    <div class="bg-white px-4 pt-6 pb-4 rounded-xl shadow-lg xl:min-h-[600px] lg:min-h-[400px] sm:min-h-[300px] flex flex-col">
-      <h1 class="mb-4 px-2 font-bold text-2xl">Recompensas</h1>
-      <div class="flex flex-col gap-y-4 flex-grow justify-between">
-        <div class="flex flex-col gap-y-2">
-          <ListedReward v-for="reward in rewards" :key="reward.id" :reward="reward"/>
-        </div>
-        <AddReward @addReward="addRewardName" />
       </div>
     </div>
   </div>
@@ -33,31 +24,25 @@
 <script lang="ts">
 import { computed, defineComponent, onUnmounted, ref } from 'vue'
 import { addTask, getTaskStream } from '@/services/tasks'
-import { addReward, getRewardStream } from '@/services/rewards'
 import ListedTask from '@/components/ListedTask.vue';
-import { DaysOfWeek, Reward, Task, TaskFrequencyWeekly } from '@/utils/models';
+import { DaysOfWeek, Task, TaskFrequencyWeekly } from '@/utils/models';
 import { getDay, getWeek, isSameDay, isSameWeek } from 'date-fns';
-import ListedReward from '@/components/ListedReward.vue';
 import AddTask from '@/components/AddTask.vue';
-import AddReward from '@/components/AddReward.vue';
 import { useStore } from 'vuex';
 import { key } from '@/store';
 
 export default defineComponent({
   name: "Dashboard",
-  components: { ListedTask, ListedReward, AddTask, AddReward },
+  components: { ListedTask, AddTask },
   setup: () => {
     let tasks = ref<Task[]>([])
-    let rewards = ref<Reward[]>([])
 
     let store = useStore(key)
 
     const unsubTasks = getTaskStream(store.state.user.uid, newTasks => tasks.value = newTasks)
-    const unsubRewards = getRewardStream(store.state.user.uid, newRewards => rewards.value = newRewards)
 
     onUnmounted(() => {
       unsubTasks()
-      unsubRewards()
     })
     
     const todayTasks = computed(() => {
@@ -113,22 +98,10 @@ export default defineComponent({
       addTask(newTask)
     }
 
-    const addRewardName = (name: string) => {
-      let newReward = {
-        user: store.state.user.uid,
-        cost: 10,
-        name,
-      } as Reward
-
-      addReward(newReward)
-    }
-
     return {
       todayTasks,
       restOfWeekTasks,
-      rewards,
       addTaskName,
-      addRewardName,
     }
   }
 });

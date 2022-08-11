@@ -125,11 +125,5 @@ export async function checkTask(task: Task, user: User, value: boolean): Promise
   task.completed = value
   await updateTask(task)
 
-  if (value) {
-    user.coins += task.difficulty ?? 1
-  } else {
-    user.coins -= task.difficulty ?? 1
-  }
-
   store.dispatch('updateUser', user)
 }

@@ -39,11 +39,10 @@
     <div class="flex justify-around items-center">
       <div>
         <p class="text-3xl font-medium">
-          Recompénsate por tu esfuerzo
+          Completa tareas
         </p>
         <p class="text-xl mt-2">
           Con YATA, puedes fijar tareas que hacer a diferentes intervalos del día. YATA te recordará.
-          Al completarlas, según su dificultad, consiguirás monedas que podrás canjear por recompensas puestas por ti.
         </p>
       </div>
       <div>
@@ -76,7 +75,6 @@ export default defineComponent({
       createUserWithEmailAndPassword(auth, email.value, password.value)
         .then((usr) => {
           setDoc(doc(db, 'users', usr.user.uid), {
-            coins: 0,
             streakDays: 0,
           })
             .then(() =>
